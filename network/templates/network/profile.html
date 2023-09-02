@@ -8,6 +8,9 @@
     {% endif %}
 
     <h1>{{name}}</h1>
+    <div>
+        <p> <b>{{followers}}</b> Followers | <b>{{following}}</b> Following</p>
+    </div>
     {% if user.is_authenticated %}
         {% if user.username != name %}
         <form action="{% url 'profile' name %}" method="post">

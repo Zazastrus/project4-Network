@@ -180,31 +180,58 @@ def profile(request, profile):
                 f = UserFollowing.objects.get(user_id=User.objects.get(id=request.user.id), following_user_id=User.objects.get(username=profile))
                 status = "Yes"
                 posts = Post.objects.filter(user=User.objects.get(username=profile)).order_by('-timestamp').all()
+
+                followers = 0
+                following = 0
+                for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
+                    followers += 1
+
+                for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
+                    following += 1
                 return render(request, "network/profile.html", 
                             {"posts": posts,
                             "name": profile,
                             "status": status,
-                            "message": "Already Followed"})
+                            "message": "Already Followed",
+                            "following": following,
+                            "followers": followers})
                 
 
             except ObjectDoesNotExist:
                 f = UserFollowing.objects.create(user_id=User.objects.get(id=request.user.id), following_user_id=User.objects.get(username=profile))
                 status = "Yes"
                 posts = Post.objects.filter(user=User.objects.get(username=profile)).order_by('-timestamp').all()
+                followers = 0
+                following = 0
+                for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
+                    followers += 1
+
+                for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
+                    following += 1
                 return render(request, "network/profile.html", 
                             {"posts": posts,
                             "name": profile,
                             "status": status,
-                            "message": "Followed"})
+                            "message": "Followed",
+                            "following": following,
+                            "followers": followers})
         elif unfollow == "unfollow":
             status = "Not"
             f = UserFollowing.objects.get(user_id=User.objects.get(id=request.user.id), following_user_id=User.objects.get(username=profile)).delete()
             posts = Post.objects.filter(user=User.objects.get(username=profile)).order_by('-timestamp').all()
+            followers = 0
+            following = 0
+            for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
+                followers += 1
+            for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
+                following += 1
             return render(request, "network/profile.html", 
                         {"posts": posts,
                         "name": profile,
                         "status": status,
-                        "message": "Unfollowed"})
+                        "message": "Unfollowed",
+                        "followers": followers,
+                        "following": following})
     # GET METHOD
     try:
         f = UserFollowing.objects.get(user_id=User.objects.get(id=request.user.id), following_user_id=User.objects.get(username=profile))
@@ -228,11 +255,22 @@ def profile(request, profile):
             for j in range(0, len(posts)):
                 if likes[i].post_like.id == posts[j].id:
                     liked_posts_id.append(posts[j].id)
+
+        followers = 0
+        following = 0
+        for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
+            followers += 1
+
+        for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
+            following += 1
+
         return render(request, "network/profile.html", 
                     {"posts": page_obj,
                     "name": profile,
                     "status": status,
-                    "likes": liked_posts_id})
+                    "likes": liked_posts_id,
+                    "following": following,
+                    "followers": followers})
                     
     except ObjectDoesNotExist:
         status = "Not"
@@ -252,11 +290,21 @@ def profile(request, profile):
                 if likes[i].post_like.id == posts[j].id:
                     liked_posts_id.append(posts[j].id)
         
+        followers = 0
+        following = 0
+        for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
+            followers += 1
+
+        for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
+            following += 1
+
         return render(request, "network/profile.html", 
                     {"posts": page_obj,
                     "name": profile,
                     "status": status,
-                    "likes": liked_posts_id})
+                    "likes": liked_posts_id,
+                    "followers": followers,
+                    "following": following})
 
 
 def following(request):
