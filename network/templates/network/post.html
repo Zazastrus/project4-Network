@@ -1,0 +1,117 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    {% if message %}
+    <div class="alert alert-danger" role="alert">
+        {{message}}
+    </div>
+    {% endif %}
+
+    <h1>Post</h1>
+    <br>
+    {% if likes == 'Yes' %}
+        <div class="card">
+                <h4><a href="{% url 'profile' post.user %}">{{post.user}}</a></h4>
+                <div id="post_{{post.id}}">
+                    
+                    <h6>{{post.content}}</h6>
+                    <h6>{{post.timestamp}}</h6>
+                    <h6>&#10084; {{post.like}}</h6>
+                    <br>
+
+                    {% if user.is_authenticated %}
+                    <div> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                        <button style="background-color: rgb(248, 79, 79); border-radius: 4px;" name="dislike" value="{{post.id}}">&#128078;</button>
+                        {% if post.user == user %}
+                            <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <br>
+            <div class="mx-2">
+                <h2>Comments</h2>
+                {% if user.is_authenticated%}
+                <form action="{% url 'comment' post.id %}" method="post">
+                    {% csrf_token %}
+                    <label>Add Comment:</label>
+                    <div>
+                        <textarea autocomplete="off" class="form-control" name="comment"></textarea>
+                    </div>
+                    <br>
+                    <button type="submit" style="background-color: cornflowerblue; border-radius: 4px;">Comment</button>
+                </form>
+                {% endif %}
+                <br>
+                <ul class="list-group">
+                    {% if comments %}
+                        {% for comment in comments %}
+                        <li class="list-group-item">
+                            <h6>{{comment.comment}}</h6>
+                            <p>Posted by <b>{{comment.author}}</b></p>
+                            <p>{{comment.timedate}}</p>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">
+                            <p>No Comments</p>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <div class="card">
+            <h4><a href="{% url 'profile' post.user %}">{{post.user}}</a></h4>
+            <div id="post_{{post.id}}">
+                
+                <h6>{{post.content}}</h6>
+                <h6> {{post.timestamp}} </h6>
+                <h6> {{post.like}}</h6>
+                <br>
+                {% if user.is_authenticated %}
+                    <div> 
+                        <button style="background-color: cornflowerblue; border-radius: 4px;" name="like" value="{{post.id}}">&#128077;</button>
+                        {% if post.user == user %}
+                            <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <br>
+            <div class="mx-2">
+                <h2>Comments</h2>
+                {% if user.is_authenticated%}
+                <form action="{% url 'comment' post.id %}" method="post">
+                    {% csrf_token %}
+                    <label>Add Comment:</label>
+                    <div>
+                        <textarea autocomplete="off" class="form-control" name="comment"></textarea>
+                    </div>
+                    <br>
+                    <button type="submit" style="background-color: cornflowerblue; border-radius: 4px;">Comment</button>
+                </form>
+                {% endif %}
+                <br>
+                <ul class="list-group">
+                    {% if comments %}
+                        {% for comment in comments %}
+                        <li class="list-group-item">
+                            <h6>{{comment.comment}}</h6>
+                            <p>Posted by <b>{{comment.author}}</b></p>
+                            <p>{{comment.timedate}}</p>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">
+                            <p>No Comments</p>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
