@@ -26,11 +26,12 @@
         {% if post.id in likes %}
             <div class="card">
                 <h4><a href="{% url 'profile' post.user %}">{{post.user}}</a></h4>
+
                 <div id="post_{{post.id}}">
                     
-                    <h6><a class="anchor_content" href="{% url 'post_page' post.id %}">{{post.content}}</a></h6>
+                    <h6><a id="anchor_{{post.id}}" class="anchor_content" href="{% url 'post_page' post.id %}">{{post.content}}</a></h6>
                     <h6> {{post.timestamp}} </h6>
-                    <h6>&#10084; {{post.like}}</h6>
+                    <h6 id="like_{{post.id}}">&#10084; {{post.like}}</h6>
                     <br>
 
                     {% if user.is_authenticated %}
@@ -54,9 +55,9 @@
                 <h4><a href="{% url 'profile' post.user %}">{{post.user}}</a></h4>
                 <div id="post_{{post.id}}">
                     
-                    <h6><a class="anchor_content" href="{% url 'post_page' post.id %}">{{post.content}}</a></h6>
+                    <h6><a id="anchor_{{post.id}}" class="anchor_content" href="{% url 'post_page' post.id %}">{{post.content}}</a></h6>
                     <h6> {{post.timestamp}} </h6>
-                    <h6>&#10084; {{post.like}}</h6>
+                    <h6 id="like_{{post.id}}">&#10084; {{post.like}}</h6>
                     <br>
     
                     {% if user.is_authenticated %}

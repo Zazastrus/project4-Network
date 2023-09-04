@@ -17,4 +17,5 @@ urlpatterns = [
     path("post/<int:post_id>", views.post, name="post"),
     path("profile/post/<int:post_id>", views.post, name="post_profile"),
     path("post_page/post/<int:post_id>", views.post, name="post_post"),
+    path("postPage/post/<int:post_id>", views.post, name="postPage_post")
 ]

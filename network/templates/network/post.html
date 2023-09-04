@@ -15,9 +15,9 @@
                 <h4><a href="{% url 'profile' post.user %}">{{post.user}}</a></h4>
                 <div id="post_{{post.id}}">
                     
-                    <h6>{{post.content}}</h6>
+                    <h6 id="h6_{{post.id}}">{{post.content}}</h6>
                     <h6>{{post.timestamp}}</h6>
-                    <h6>&#10084; {{post.like}}</h6>
+                    <h6 id="like_{{post.id}}">&#10084; {{post.like}}</h6>
                     <br>
 
                     {% if user.is_authenticated %}
@@ -28,6 +28,12 @@
                         {% endif %}
                     </div>
                     {% endif %}
+                </div>
+
+                <div id="edit_div_{{post.id}}" style="display: none;">
+                    <textarea autofocus autocomplete="off" class="form-control" id="post_edit_{{post.id}}"></textarea>
+                    <br>
+                    <button style="background-color: cornflowerblue; border-radius: 4px;" id="save_{{post.id}}" value="{{post.id}}">Save</button>
                 </div>
                 
                 <br>
@@ -67,9 +73,9 @@
             <h4><a href="{% url 'profile' post.user %}">{{post.user}}</a></h4>
             <div id="post_{{post.id}}">
                 
-                <h6>{{post.content}}</h6>
+                <h6 id="h6_{{post.id}}">{{post.content}}</h6>
                 <h6> {{post.timestamp}} </h6>
-                <h6> {{post.like}}</h6>
+                <h6 id="like_{{post.id}}"> {{post.like}}</h6>
                 <br>
                 {% if user.is_authenticated %}
                     <div> 

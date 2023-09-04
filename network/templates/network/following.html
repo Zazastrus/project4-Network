@@ -12,7 +12,7 @@
               
               <h6><a class="anchor_content" href="{% url 'post_page' post.id %}">{{post.content}}</a></h6>
               <h6> {{post.timestamp}} </h6>
-              <h6>&#10084; {{post.like}}</h6>
+              <h6 id="like_{{post.id}}" >&#10084; {{post.like}}</h6>
               <br>
 
               {% if user.is_authenticated %}
@@ -38,7 +38,7 @@
               
               <h6><a class="anchor_content" href="{% url 'post_page' post.id %}">{{post.content}}</a></h6>
               <h6> {{post.timestamp}} </h6>
-              <h6>&#10084; {{post.like}}</h6>
+              <h6 id="like_{{post.id}}">&#10084; {{post.like}}</h6>
               <br>
 
               {% if user.is_authenticated %}
