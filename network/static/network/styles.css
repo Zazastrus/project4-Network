@@ -11,6 +11,7 @@ h1{
 .btn, button {
     width: 100px; 
     height: 40px; 
+    border-radius: 4px;
     text-align: center;
     color:aliceblue;
 }

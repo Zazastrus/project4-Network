@@ -23,28 +23,28 @@
                     {% if user.is_authenticated %}
                         {% if likes == 'Yes' %}
                             <div id="div_dislike_{{post.id}}" style="display: block;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                                <button style="background-color:  rgb(248, 79, 79); border-radius: 4px;" name="dislike" value="{{post.id}}">&#128078;</button>
+                                <button style="background-color:  rgb(248, 79, 79); " name="dislike" value="{{post.id}}">&#128078;</button>
                                 {% if post.user == user %}
-                                    <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                                    <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
                                 {% endif %}
                             </div>
                             <div id="div_like_{{post.id}}" style="display: none;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                                <button style="background-color: cornflowerblue; border-radius: 4px;" name="like" value="{{post.id}}">&#128077;</button>
+                                <button style="background-color: cornflowerblue; " name="like" value="{{post.id}}">&#128077;</button>
                                 {% if post.user == user %}
-                                    <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                                    <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
                                 {% endif %}
                             </div>
                         {% else %}
                             <div id="div_like_{{post.id}}" style="display: block;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                                <button style="background-color: cornflowerblue; border-radius: 4px;" name="like" value="{{post.id}}">&#128077;</button>
+                                <button style="background-color: cornflowerblue; " name="like" value="{{post.id}}">&#128077;</button>
                                 {% if post.user == user %}
-                                    <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                                    <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
                                 {% endif %}
                             </div>
                             <div id="div_dislike_{{post.id}}" style="display: none;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                                <button style="background-color:  rgb(248, 79, 79); border-radius: 4px;" name="dislike" value="{{post.id}}">&#128078;</button>
+                                <button style="background-color:  rgb(248, 79, 79); " name="dislike" value="{{post.id}}">&#128078;</button>
                                 {% if post.user == user %}
-                                    <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                                    <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
                                 {% endif %}
                             </div>
                         {% endif %}
@@ -54,7 +54,7 @@
                 <div id="edit_div_{{post.id}}" style="display: none;">
                     <textarea autofocus autocomplete="off" class="form-control" id="post_edit_{{post.id}}"></textarea>
                     <br>
-                    <button style="background-color: cornflowerblue; border-radius: 4px;" id="save_{{post.id}}" value="{{post.id}}">Save</button>
+                    <button style="background-color: cornflowerblue; " id="save_{{post.id}}" value="{{post.id}}">Save</button>
                 </div>
                 
                 <br>
@@ -68,7 +68,7 @@
                         <textarea autocomplete="off" class="form-control" name="comment"></textarea>
                     </div>
                     <br>
-                    <button type="submit" style="background-color: cornflowerblue; border-radius: 4px;">Comment</button>
+                    <button type="submit" style="background-color: cornflowerblue; ">Comment</button>
                 </form>
                 {% endif %}
                 <br>
