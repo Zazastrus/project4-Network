@@ -170,82 +170,34 @@ def post_page(request, post_id):
             "comments": comment_list,
             "likes": likes})
         
-
+@csrf_exempt
 def profile(request, profile):
     if request.method == "POST":
-        follow = request.POST.get("follow")
-        unfollow = request.POST.get("unfollow")
+        data = json.loads(request.body)
+        act = data["f"]
+        if act == "Follow":
+            user = User.objects.get(id=request.user.id)
+            follow_user = User.objects.get(username=profile)
+            UserFollowing.objects.create(user_id=user, following_user_id=follow_user)
+            return HttpResponse(status=204)
+        
+        elif act == "Unfollow":
+            user = User.objects.get(id=request.user.id)
+            follow_user = User.objects.get(username=profile)
+            UserFollowing.objects.get(user_id=user, following_user_id=follow_user).delete()
+            return HttpResponse(status=204)
 
-        if follow == "follow":
-            try:
-                f = UserFollowing.objects.get(user_id=User.objects.get(id=request.user.id), following_user_id=User.objects.get(username=profile))
-                status = "Yes"
-                posts = Post.objects.filter(user=User.objects.get(username=profile)).order_by('-timestamp').all()
-
-                followers = 0
-                following = 0
-                for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
-                    followers += 1
-
-                for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
-                    following += 1
-                return render(request, "network/profile.html", 
-                            {"posts": posts,
-                            "name": profile,
-                            "status": status,
-                            "message": "Already Followed",
-                            "following": following,
-                            "followers": followers})
-                
-
-            except ObjectDoesNotExist:
-                f = UserFollowing.objects.create(user_id=User.objects.get(id=request.user.id), following_user_id=User.objects.get(username=profile))
-                status = "Yes"
-                posts = Post.objects.filter(user=User.objects.get(username=profile)).order_by('-timestamp').all()
-                followers = 0
-                following = 0
-                for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
-                    followers += 1
-
-                for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
-                    following += 1
-                return render(request, "network/profile.html", 
-                            {"posts": posts,
-                            "name": profile,
-                            "status": status,
-                            "message": "Followed",
-                            "following": following,
-                            "followers": followers})
-        elif unfollow == "unfollow":
-            status = "Not"
-            f = UserFollowing.objects.get(user_id=User.objects.get(id=request.user.id), following_user_id=User.objects.get(username=profile)).delete()
-            posts = Post.objects.filter(user=User.objects.get(username=profile)).order_by('-timestamp').all()
-            followers = 0
-            following = 0
-            for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
-                followers += 1
-            for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
-                following += 1
-            return render(request, "network/profile.html", 
-                        {"posts": posts,
-                        "name": profile,
-                        "status": status,
-                        "message": "Unfollowed",
-                        "followers": followers,
-                        "following": following})
     # GET METHOD
     try:
         f = UserFollowing.objects.get(user_id=User.objects.get(id=request.user.id), following_user_id=User.objects.get(username=profile))
-        if f:
-            status = "Yes"
-        else:
-            status = "Not"
-        
+        status = "Followed"
+        # Ordered posts by id
         all_posts = Post.objects.filter(user=User.objects.get(username=profile)).order_by('-timestamp').all()
         posts = [] 
         for i in range(0, len(all_posts)):
             posts.append(all_posts[i])
         posts.sort(key=lambda post: post.id, reverse=True)
+
         paginator = Paginator(posts, 10)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
@@ -259,10 +211,10 @@ def profile(request, profile):
 
         followers = 0
         following = 0
-        for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
+        for i in range(0, len(UserFollowing.objects.filter(following_user_id=User.objects.get(username=profile)))):
             followers += 1
 
-        for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
+        for j in range(0, len(UserFollowing.objects.filter(user_id=User.objects.get(username=profile)))):
             following += 1
 
         return render(request, "network/profile.html", 
@@ -271,7 +223,8 @@ def profile(request, profile):
                     "status": status,
                     "likes": liked_posts,
                     "following": following,
-                    "followers": followers})
+                    "followers": followers,
+                    })
                     
     except ObjectDoesNotExist:
         status = "Not"
@@ -293,10 +246,10 @@ def profile(request, profile):
         
         followers = 0
         following = 0
-        for i in range(0, len(UserFollowing.objects.filter(following_user_id=request.user.id))):
+        for i in range(0, len(UserFollowing.objects.filter(following_user_id=User.objects.get(username=profile)))):
             followers += 1
 
-        for j in range(0, len(UserFollowing.objects.filter(user_id=request.user.id))):
+        for j in range(0, len(UserFollowing.objects.filter(user_id=User.objects.get(username=profile)))):
             following += 1
 
         return render(request, "network/profile.html", 

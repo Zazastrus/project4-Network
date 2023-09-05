@@ -84,4 +84,41 @@ document.addEventListener("DOMContentLoaded", function() {
         return false;
     });
 
+    document.getElementsByName(`followAct`).forEach(button => {
+        button.onclick = () => {
+            const profile = button.value;   // follow, unfollow
+            const act = button.innerHTML;
+            const count = parseInt(document.getElementById('followers').innerHTML);
+            
+            console.log(count);
+            if (act === 'Follow'){
+                fetch(`${profile}`,{
+                    method: 'POST',
+                    body: JSON.stringify({
+                        f: act
+                    })
+                });
+                let newCount = count + 1;
+                document.getElementById('follow').style.display = 'none';
+                document.getElementById('unfollow').style.display = 'block';
+                document.getElementById('followers').innerHTML = newCount;
+                return false;
+            }
+            else {
+                fetch(`${profile}`,{
+                    method: 'POST',
+                    body: JSON.stringify({
+                        f: act
+                    })
+                })
+                let newCount = count - 1;
+                document.getElementById('follow').style.display = 'block';
+                document.getElementById('unfollow').style.display = 'none';
+                document.getElementById('followers').innerHTML = newCount;
+                return false;
+            }
+            //return false;
+        };
+    });
+
 });

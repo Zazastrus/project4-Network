@@ -9,6 +9,12 @@
 
     <h1>Following</h1>
     <br>
+    {% if not posts %}
+      <div style="text-align: center;">
+        <h2><i>Any User Followed</i></h2>
+      </div>
+    {% endif %}
+    <br>
     {% for post in posts %}
       <div class="card">
         <h4><a href="{% url 'profile' post.user %}">{{post.user}}</a></h4>
