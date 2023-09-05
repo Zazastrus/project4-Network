@@ -68,7 +68,7 @@ def index(request):
     return render(request, "network/index.html", 
                   {"posts": page_obj,
                    "likes": liked_posts,
-                   "message": liked_posts})
+                   })
 
 def addComment(request, post_id):
     if request.method == "POST":
@@ -306,7 +306,7 @@ def profile(request, profile):
                     "likes": liked_posts,
                     "followers": followers,
                     "following": following,
-                    "message": liked_posts})
+                    })
 
 
 def following(request):
@@ -348,7 +348,7 @@ def following(request):
                   {
                    "posts":page_obj,
                    "likes":liked_posts,
-                   "message": liked_posts})
+                   })
 
 
 def login_view(request):

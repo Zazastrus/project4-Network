@@ -38,46 +38,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
         button.onclick = () => {
             
-            console.log(button.value)
-            fetch(`post/${button.value}`)
+            const id = button.value;
+            fetch(`post/${id}`)
             .then(response => response.json())
             .then(post => {
                 const past_like = post["like"];
                 const new_like = past_like + 1;
                 console.log(post)
-                fetch(`post/${button.value}`,{
+                fetch(`post/${id}`,{
                     method: "PUT",
                     body: JSON.stringify({
                         like: new_like
                     })
                 })
-                //document.getElementById(`like_${button.value}`).innerHTML = `&#10084; ${new_like}`;
-                this.location.reload()
+                document.getElementById(`like_${id}`).innerHTML = `&#10084; ${new_like}`;
+                document.getElementById(`div_like_${id}`).style.display = "none";
+                document.getElementById(`div_dislike_${id}`).style.display = "block";
             });
         };
+        return false;
     });
 
     document.getElementsByName("dislike").forEach(button => {
 
         button.onclick = () => {
-
-            fetch(`post/${button.value}`)
+            
+            const id = button.value;
+            fetch(`post/${id}`)
             .then(response => response.json())
             .then(post => {
                 const past_like = post["like"];
                 const new_like = past_like - 1;
 
-                fetch(`post/${button.value}`,{
+                fetch(`post/${id}`,{
                     method: "PUT",
                     body: JSON.stringify({
                         like: new_like
                     })
                 })
-                //document.getElementById(`like_${button.value}`).innerHTML = `&#10084; ${new_like}`;
-                this.location.reload()
+                document.getElementById(`like_${id}`).innerHTML = `&#10084; ${new_like}`;
+                document.getElementById(`div_like_${id}`).style.display = "block";
+                document.getElementById(`div_dislike_${id}`).style.display = "none";
             });
         };
-        //return false;
+        return false;
     });
 
 });

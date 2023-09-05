@@ -22,15 +22,27 @@
 
                     {% if user.is_authenticated %}
                         {% if likes == 'Yes' %}
-                            <div> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                                <button style="background-color: rgb(248, 79, 79); border-radius: 4px;" name="dislike" value="{{post.id}}">&#128078;</button>
+                            <div id="div_dislike_{{post.id}}" style="display: block;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                                <button style="background-color:  rgb(248, 79, 79); border-radius: 4px;" name="dislike" value="{{post.id}}">&#128078;</button>
+                                {% if post.user == user %}
+                                    <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                                {% endif %}
+                            </div>
+                            <div id="div_like_{{post.id}}" style="display: none;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                                <button style="background-color: cornflowerblue; border-radius: 4px;" name="like" value="{{post.id}}">&#128077;</button>
                                 {% if post.user == user %}
                                     <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
                                 {% endif %}
                             </div>
                         {% else %}
-                            <div> 
+                            <div id="div_like_{{post.id}}" style="display: block;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
                                 <button style="background-color: cornflowerblue; border-radius: 4px;" name="like" value="{{post.id}}">&#128077;</button>
+                                {% if post.user == user %}
+                                    <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                                {% endif %}
+                            </div>
+                            <div id="div_dislike_{{post.id}}" style="display: none;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                                <button style="background-color:  rgb(248, 79, 79); border-radius: 4px;" name="dislike" value="{{post.id}}">&#128078;</button>
                                 {% if post.user == user %}
                                     <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
                                 {% endif %}
