@@ -9,6 +9,19 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById(`edit_div_${id}`).style.display = "block";
             document.getElementById(`post_${id}`).style.display = "none";
 
+            // The SAVE button only works when the text area isn't empty.
+            const saveButton = document.getElementById(`save_${id}`);
+            const editArea = document.getElementById(`post_edit_${id}`);
+            saveButton.disabled = true;
+            editArea.onkeyup = () => {
+                if (editArea.value.length > 0){
+                    saveButton.disabled = false;
+                }
+                else {
+                    saveButton.disabled = true;
+                }
+            }
+
             document.getElementById(`save_${id}`).onclick = () => {
                 const newCont = document.getElementById(`post_edit_${id}`).value;
                 
@@ -86,11 +99,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementsByName(`followAct`).forEach(button => {
         button.onclick = () => {
-            const profile = button.value;   // follow, unfollow
+            const profile = button.value;
             const act = button.innerHTML;
             const count = parseInt(document.getElementById('followers').innerHTML);
             
-            console.log(count);
             if (act === 'Follow'){
                 fetch(`${profile}`,{
                     method: 'POST',
@@ -117,8 +129,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById('followers').innerHTML = newCount;
                 return false;
             }
-            //return false;
         };
     });
 
+    // The POST button only work when the text area isn't empty
+    const postButton = document.getElementById('post_button');
+    const postArea = document.getElementById('post_area');
+
+    postButton.disabled = true;
+    
+    postArea.onkeyup = () => {
+        if (postArea.value.length > 0){
+            postButton.disabled = false;
+        }
+        else {
+            postButton.disabled = true;
+        }
+    }
 });

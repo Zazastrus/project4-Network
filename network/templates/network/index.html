@@ -14,9 +14,9 @@
         {% csrf_token %}
         <div class="card">
             <h4>New Post</h4>
-            <textarea autocomplete="off" class="form-control" name="newPost"></textarea>
+            <textarea autocomplete="off" class="form-control" id="post_area" name="newPost" placeholder="What are you thinking?..."></textarea>
             <br>
-            <button type="submit" style="background-color: cornflowerblue; border-radius: 4px;">Post</button>
+            <button id="post_button" type="submit" style="background-color: cornflowerblue; border-radius: 4px;" disabled>Post</button>
         </div>
     </form>
     {% endif %}
