@@ -35,15 +35,15 @@ def index(request):
 
         # For likes
         likes = UserLike.objects.filter(user_id=request.user.id)
-        liked_posts_id = []
+        liked_posts = []
         for i in range(0, len(likes)):
             for j in range(0, len(posts)):
-                if likes[i].post_like.id == posts[j].id:
-                    liked_posts_id.append(posts[j].id)
+                if likes[i].post_like == posts[j]:
+                    liked_posts.append(posts[j])
 
         return render(request, "network/index.html", 
                   {"posts": page_obj,
-                   "likes": liked_posts_id})
+                   "likes": liked_posts})
 
     
     # For pagination
@@ -59,15 +59,16 @@ def index(request):
 
     # For likes
     likes = UserLike.objects.filter(user_id=request.user.id)
-    liked_posts_id = []
+    liked_posts = []
     for i in range(0, len(likes)):
         for j in range(0, len(posts)):
-            if likes[i].post_like.id == posts[j].id:
-                liked_posts_id.append(posts[j].id)
+            if likes[i].post_like == posts[j]:
+                liked_posts.append(posts[j])
 
     return render(request, "network/index.html", 
                   {"posts": page_obj,
-                   "likes": liked_posts_id})
+                   "likes": liked_posts,
+                   "message": liked_posts})
 
 def addComment(request, post_id):
     if request.method == "POST":
@@ -250,11 +251,11 @@ def profile(request, profile):
         page_obj = paginator.get_page(page_number)
 
         likes = UserLike.objects.filter(user_id=request.user.id)
-        liked_posts_id = []
+        liked_posts = []
         for i in range(0, len(likes)):
             for j in range(0, len(posts)):
-                if likes[i].post_like.id == posts[j].id:
-                    liked_posts_id.append(posts[j].id)
+                if likes[i].post_like == posts[j]:
+                    liked_posts.append(posts[j])
 
         followers = 0
         following = 0
@@ -268,7 +269,7 @@ def profile(request, profile):
                     {"posts": page_obj,
                     "name": profile,
                     "status": status,
-                    "likes": liked_posts_id,
+                    "likes": liked_posts,
                     "following": following,
                     "followers": followers})
                     
@@ -284,11 +285,11 @@ def profile(request, profile):
         page_obj = paginator.get_page(page_number)
 
         likes = UserLike.objects.filter(user_id=request.user.id)
-        liked_posts_id = []
+        liked_posts = []
         for i in range(0, len(likes)):
             for j in range(0, len(posts)):
-                if likes[i].post_like.id == posts[j].id:
-                    liked_posts_id.append(posts[j].id)
+                if likes[i].post_like == posts[j]:
+                    liked_posts.append(posts[j])
         
         followers = 0
         following = 0
@@ -302,9 +303,10 @@ def profile(request, profile):
                     {"posts": page_obj,
                     "name": profile,
                     "status": status,
-                    "likes": liked_posts_id,
+                    "likes": liked_posts,
                     "followers": followers,
-                    "following": following})
+                    "following": following,
+                    "message": liked_posts})
 
 
 def following(request):
@@ -346,7 +348,7 @@ def following(request):
                   {
                    "posts":page_obj,
                    "likes":liked_posts,
-                   })
+                   "message": liked_posts})
 
 
 def login_view(request):

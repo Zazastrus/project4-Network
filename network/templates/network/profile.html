@@ -26,59 +26,40 @@
     <br>
 
     {% for post in posts %}
-        {% if post.id in likes %}
-            <div class="card">
-                    <h4>{{post.user}}</h4>
-                    <div id="post_{{post.id}}">
-                        
-                        <h6><a id="anchor_{{post.id}}" class="anchor_content" href="{% url 'post_page' post.id %}">{{post.content}}</a></h6>
-                        <h6> {{post.timestamp}} </h6>
-                        <h6 id="like_{{post.id}}">&#10084; {{post.like}}</h6>
-                        <br>
+        <div class="card">
+                <h4>{{post.user}}</h4>
+                <div id="post_{{post.id}}">
+                    
+                    <h6><a id="anchor_{{post.id}}" class="anchor_content" href="{% url 'post_page' post.id %}">{{post.content}}</a></h6>
+                    <h6> {{post.timestamp}} </h6>
+                    <h6 id="like_{{post.id}}">&#10084; {{post.like}}</h6>
+                    <br>
 
-                        {% if user.is_authenticated %}
-                        <div> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                            <button style="background-color: rgb(248, 79, 79); border-radius: 4px;" name="dislike" value="{{post.id}}">&#128078;</button>
-                            {% if post.user == user %}
-                                <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
-                            {% endif %}
-                        </div>
+                    {% if user.is_authenticated %}
+                        {% if post in likes %}
+                            <div> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                                <button style="background-color: rgb(248, 79, 79); border-radius: 4px;" name="dislike" value="{{post.id}}">&#128078;</button>
+                                {% if post.user == user %}
+                                    <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                                <button style="background-color: cornflowerblue; border-radius: 4px;" name="like" value="{{post.id}}">&#128077;</button>
+                                {% if post.user == user %}
+                                    <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
+                                {% endif %}
+                            </div>
                         {% endif %}
-                    </div>
-                    
-                    <div id="edit_div_{{post.id}}" style="display: none;">
-                            <textarea autofocus autocomplete="off" class="form-control" id="post_edit_{{post.id}}"></textarea>
-                            <br>
-                            <button style="background-color: cornflowerblue; border-radius: 4px;" id="save_{{post.id}}" value="{{post.id}}">Save</button>
-                    </div>
-            </div>
-        {% else %}
-            <div class="card">
-                    <h4>{{post.user}}</h4>
-                    <div id="post_{{post.id}}">
-                        
-                        <h6><a id="anchor_{{post.id}}" class="anchor_content" href="{% url 'post_page' post.id %}">{{post.content}}</a></h6>
-                        <h6> {{post.timestamp}} </h6>
-                        <h6 id="like_{{post.id}}">&#10084; {{post.like}}</h6>
+                    {% endif %}
+                </div>
+                
+                <div id="edit_div_{{post.id}}" style="display: none;">
+                        <textarea autofocus autocomplete="off" class="form-control" id="post_edit_{{post.id}}"></textarea>
                         <br>
-        
-                        {% if user.is_authenticated %}
-                        <div> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                            <button style="background-color: cornflowerblue; border-radius: 4px;" name="like" value="{{post.id}}">&#128077;</button>
-                            {% if post.user == user %}
-                                <button style="background-color: cornflowerblue; border-radius: 4px;" name="edit" value="{{post.id}}">Edit</button>
-                            {% endif %}
-                        </div>
-                        {% endif %}
-                    </div>
-                    
-                    <div id="edit_div_{{post.id}}" style="display: none;">
-                            <textarea autofocus autocomplete="off" class="form-control" id="post_edit_{{post.id}}"></textarea>
-                            <br>
-                            <button style="background-color: cornflowerblue; border-radius: 4px;" id="save_{{post.id}}" value="{{post.id}}">Save</button>
-                    </div>
-            </div>
-        {% endif %}
+                        <button style="background-color: cornflowerblue; border-radius: 4px;" id="save_{{post.id}}" value="{{post.id}}">Save</button>
+                </div>
+        </div>
     {%endfor%}
 
     <nav aria-label="Page navigation example">
