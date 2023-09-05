@@ -13,14 +13,11 @@ from .models import User, Post, UserFollowing, UserLike, Comment
 
 def index(request):
     if request.method == "POST":
-        username = request.user.id
-        content = request.POST["twt"]
-        if content is None or content == "":
-            return render(request, "network/index.html", {
-                "message": "Content Problem",
-                "posts": Post.objects.all().order_by('-timestamp')
-            })
-        post = Post.objects.create(user_id=username, content=content)
+        content = request.POST["newPost"]
+        if content == "":
+            return HttpResponseRedirect(reverse("index"))
+        
+        post = Post.objects.create(user_id=request.user.id, content=content)
         post.save()
 
         # For pagination
