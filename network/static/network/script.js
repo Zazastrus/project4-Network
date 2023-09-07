@@ -136,14 +136,34 @@ document.addEventListener("DOMContentLoaded", function() {
     const postButton = document.getElementById('post_button');
     const postArea = document.getElementById('post_area');
 
-    postButton.disabled = true;
-    
-    postArea.onkeyup = () => {
-        if (postArea.value.length > 0){
-            postButton.disabled = false;
-        }
-        else {
-            postButton.disabled = true;
+    if (postButton){
+        postButton.disabled = true;
+
+        postArea.onkeyup = () => {
+            if (postArea.value.length > 0){
+                postButton.disabled = false;
+            }
+            else {
+                postButton.disabled = true;
+            }
         }
     }
+    
+
+    const commentButton = document.getElementById('comment_button');
+    const commentArea = document.getElementById('comment_area');
+    
+    if (commentButton){
+        commentButton.disabled = true;
+        
+        commentArea.onkeyup = () => {
+            if (commentArea.value.length > 0){
+                commentButton.disabled = false;
+            }
+            else {
+                commentButton.disabled = true;
+            }
+        }
+    }
+    
 });

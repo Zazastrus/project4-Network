@@ -10,85 +10,83 @@
 
     <h1>Post</h1>
     <br>
-    {% if likes == 'Yes' %}
-        <div class="card">
-                <h4><a href="{% url 'profile' post.user %}">{{post.user}}</a></h4>
-                <div id="post_{{post.id}}">
-                    
-                    <h6 id="h6_{{post.id}}">{{post.content}}</h6>
-                    <h6>{{post.timestamp}}</h6>
-                    <h6 id="like_{{post.id}}">&#10084; {{post.like}}</h6>
-                    <br>
-
-                    {% if user.is_authenticated %}
-                        {% if likes == 'Yes' %}
-                            <div id="div_dislike_{{post.id}}" style="display: block;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                                <button style="background-color:  rgb(248, 79, 79); " name="dislike" value="{{post.id}}">&#128078;</button>
-                                {% if post.user == user %}
-                                    <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
-                                {% endif %}
-                            </div>
-                            <div id="div_like_{{post.id}}" style="display: none;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                                <button style="background-color: cornflowerblue; " name="like" value="{{post.id}}">&#128077;</button>
-                                {% if post.user == user %}
-                                    <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
-                                {% endif %}
-                            </div>
-                        {% else %}
-                            <div id="div_like_{{post.id}}" style="display: block;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                                <button style="background-color: cornflowerblue; " name="like" value="{{post.id}}">&#128077;</button>
-                                {% if post.user == user %}
-                                    <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
-                                {% endif %}
-                            </div>
-                            <div id="div_dislike_{{post.id}}" style="display: none;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
-                                <button style="background-color:  rgb(248, 79, 79); " name="dislike" value="{{post.id}}">&#128078;</button>
-                                {% if post.user == user %}
-                                    <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                </div>
-
-                <div id="edit_div_{{post.id}}" style="display: none;">
-                    <textarea autofocus autocomplete="off" class="form-control" id="post_edit_{{post.id}}"></textarea>
-                    <br>
-                    <button style="background-color: cornflowerblue; " id="save_{{post.id}}" value="{{post.id}}">Save</button>
-                </div>
+    <div class="card">
+            <h4><a href="{% url 'profile' post.user %}">{{post.user}}</a></h4>
+            <div id="post_{{post.id}}">
                 
+                <h6 id="h6_{{post.id}}">{{post.content}}</h6>
+                <h6>{{post.timestamp}}</h6>
+                <h6 id="like_{{post.id}}">&#10084; {{post.like}}</h6>
                 <br>
-            <div class="mx-2">
-                <h2>Comments</h2>
-                {% if user.is_authenticated%}
-                <form action="{% url 'comment' post.id %}" method="post">
-                    {% csrf_token %}
-                    <label>Add Comment:</label>
-                    <div>
-                        <textarea autocomplete="off" class="form-control" name="comment"></textarea>
-                    </div>
-                    <br>
-                    <button type="submit" style="background-color: cornflowerblue; ">Comment</button>
-                </form>
-                {% endif %}
-                <br>
-                <ul class="list-group">
-                    {% if comments %}
-                        {% for comment in comments %}
-                        <li class="list-group-item">
-                            <h6>{{comment.comment}}</h6>
-                            <p>Posted by <b>{{comment.author}}</b></p>
-                            <p>{{comment.timedate}}</p>
-                        </li>
-                        {% endfor %}
+
+                {% if user.is_authenticated %}
+                    {% if likes == 'Yes' %}
+                        <div id="div_dislike_{{post.id}}" style="display: block;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                            <button style="background-color:  rgb(248, 79, 79); " name="dislike" value="{{post.id}}">&#128078;</button>
+                            {% if post.user == user %}
+                                <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
+                            {% endif %}
+                        </div>
+                        <div id="div_like_{{post.id}}" style="display: none;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                            <button style="background-color: cornflowerblue; " name="like" value="{{post.id}}">&#128077;</button>
+                            {% if post.user == user %}
+                                <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
+                            {% endif %}
+                        </div>
                     {% else %}
-                        <li class="list-group-item">
-                            <p>No Comments</p>
-                        </li>
+                        <div id="div_like_{{post.id}}" style="display: block;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                            <button style="background-color: cornflowerblue; " name="like" value="{{post.id}}">&#128077;</button>
+                            {% if post.user == user %}
+                                <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
+                            {% endif %}
+                        </div>
+                        <div id="div_dislike_{{post.id}}" style="display: none;"> <!--This DIV is for the button LIKE, DISLIKE, and EDIT-->
+                            <button style="background-color:  rgb(248, 79, 79); " name="dislike" value="{{post.id}}">&#128078;</button>
+                            {% if post.user == user %}
+                                <button style="background-color: cornflowerblue; " name="edit" value="{{post.id}}">Edit</button>
+                            {% endif %}
+                        </div>
                     {% endif %}
-                </ul>
+                {% endif %}
             </div>
+
+            <div id="edit_div_{{post.id}}" style="display: none;">
+                <textarea autofocus autocomplete="off" class="form-control" id="post_edit_{{post.id}}"></textarea>
+                <br>
+                <button style="background-color: cornflowerblue; " id="save_{{post.id}}" value="{{post.id}}" disabled>Save</button>
+            </div>
+            
+            <br>
+        <div class="mx-2">
+            <h2>Comments</h2>
+            {% if user.is_authenticated%}
+            <form action="{% url 'comment' post.id %}" method="post">
+                {% csrf_token %}
+                <p><b>Add Comment:</b></p>
+                <div>
+                    <textarea id="comment_area" autocomplete="off" class="form-control" name="comment"></textarea>
+                </div>
+                <br>
+                <button id="comment_button" type="submit" style="background-color: cornflowerblue;" disabled>Comment</button>
+            </form>
+            {% endif %}
+            <br>
+            <ul class="list-group">
+                {% if comments %}
+                    {% for comment in comments %}
+                    <li class="list-group-item">
+                        <h6>{{comment.comment}}</h6>
+                        <p>Posted by <b>{{comment.author}}</b></p>
+                        <p>{{comment.timedate}}</p>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="list-group-item">
+                        <p>No Comments</p>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-    {% endif %}
+    </div>
 
 {% endblock %}

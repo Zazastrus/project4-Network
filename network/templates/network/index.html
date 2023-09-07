@@ -16,7 +16,7 @@
             <h4>New Post</h4>
             <textarea autocomplete="off" class="form-control" id="post_area" name="newPost" placeholder="What are you thinking?..."></textarea>
             <br>
-            <button id="post_button" type="submit" style="background-color: cornflowerblue;">Post</button>
+            <button id="post_button" type="submit" style="background-color: cornflowerblue;" disabled>Post</button>
         </div>
     </form>
     {% endif %}
@@ -67,7 +67,7 @@
             <div id="edit_div_{{post.id}}" style="display: none;">
                     <textarea autofocus autocomplete="off" class="form-control" id="post_edit_{{post.id}}"></textarea>
                     <br>
-                    <button style="background-color: cornflowerblue" id="save_{{post.id}}" value="{{post.id}}">Save</button>
+                    <button style="background-color: cornflowerblue" id="save_{{post.id}}" value="{{post.id}}" disabled>Save</button>
             </div>
 
         </div>
