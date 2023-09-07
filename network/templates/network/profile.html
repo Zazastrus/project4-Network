@@ -13,19 +13,17 @@
     </div>
     {% if user.is_authenticated %}
         {% if user.username != name %}
-        <!--form action="{% url 'profile' name %}" method="post"-->
-            <!--{% csrf_token %}-->
+        <form action="{% url 'profile' name %}" method="post">
+            {% csrf_token %}
             {% if status == "Not" %}
-                <!--button class="btn btn-primary" name="follow" value="follow">Follow</button-->
                 <button id="follow" class="btn btn-primary" style="display: block;" name="followAct" value="{{name}}">Follow</button>
                 <button id="unfollow" class="btn btn-danger" style="display: none;" name="followAct" value="{{name}}">Unfollow</button>
             {% else %}
-                <!--button class="btn btn-danger" name="unfollow" value="unfollow">Unfollow</button-->
                 <button id="follow" class="btn btn-primary" style="display: none;" name="followAct" value="{{name}}">Follow</button>
                 <button id="unfollow" class="btn btn-danger" style="display: block;" name="followAct" value="{{name}}">Unfollow</button>
             {% endif %}
             
-        <!--/form-->
+        </form>
         {% endif %}
     {% endif %}
     <br>
